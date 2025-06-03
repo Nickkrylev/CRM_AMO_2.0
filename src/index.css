@@ -1,0 +1,97 @@
+body {
+	background-color: var(--bg-color);
+	color: var(--text-color);
+	transition: 0.3s ease-in-out;
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
+	transition: background 0.3s ease-in-out;
+}
+:root {
+/* Светлая тема */
+	--bg-color: #F6F8FF;
+	--text-color: #DEE1ED;
+	--text-hover-color: ;
+	--container-bg: #19213A;
+	--container-text-color: #7DADFF;
+	--container-hover-bg: #629CFF;
+	--container-hover-text-color: #39415A;
+	--button-bg: #C5CDE6;
+	--button-text: #19213A;
+	--opacity-container: rgba(25, 33, 58, 0.1);
+}
+[data-theme="dark"] {
+/* Темная тема */
+	--bg-color: #0F2231;
+	--text-color: #F6F8FF;
+	--text-hover-color: ;
+	--container-bg: #153043;
+	--container-text-color: #F6F8FF;
+	--container-hover-bg: #629CFF;
+	--container-hover-text-color: #7e8aa4;
+	--border--color: #596683;
+	--button-bg: #19374D;
+	--button-text: #19213A;
+	--opacity-container: rgba(25, 33, 58, 0.7);
+}
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video, button {
+	margin: 0;
+	padding: 0;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+a {
+  all: unset;
+  cursor: pointer; 
+}
+.hidden-scroll {
+	overflow: auto;
+	scrollbar-width: none; 
+	-ms-overflow-style: none; 
+}
+.hidden-scroll::-webkit-scrollbar {
+    width: 6px;
+}
+.hidden-scroll::-webkit-scrollbar-thumb {
+    display: none;
+}
+/* const [orders, setOrders] = useState([
+    { id: 1, name: "Разработка СРМ", stage: "Лиды" },
+    { id: 2, name: "Покурить", stage: "Лиды" },
+    { id: 3, name: "Редизайн сайта", stage: "Лиды" },
+    { id: 4, name: "Покурить", stage: "Лиды" },
+    { id: 5, name: "Предрейс", stage: "Лиды" },
+    { id: 6, name: "Покурить", stage: "Лиды" },
+    { id: 7, name: "Выпить пива", stage: "Лиды" },
+    { id: 8, name: "Тим билдинг в кс2", stage: "Лиды" },
+    { id: 9, name: "Покурить", stage: "Лиды" },
+    { id: 10, name: "Тим билдинг в кс2", stage: "Лиды" },
+    { id: 11, name: "Покурить", stage: "Лиды" }
+  ]); 
+*/
