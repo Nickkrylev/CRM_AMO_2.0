@@ -1,0 +1,8 @@
+# dependencies
+/node_modules
+# dotenv
+.env*
+# prisma
+/prisma/migrations
+# logs
+*.log
