@@ -1,0 +1,118 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Employee {
+  id        Int      @id @default(autoincrement())
+  status    String?  @db.VarChar(50)
+  full_name String?  @db.VarChar(255)
+  phone     String?  @db.VarChar(50)
+  email     String?  @db.VarChar(100)
+  login     String   @db.VarChar(100) @unique
+  password  String   @db.VarChar(255)
+  folder    String?  @db.VarChar(255)
+
+  tasks     Task[]
+  clients   Client[] @relation("ManagerClients")
+}
+
+model Company {
+  id          Int         @id @default(autoincrement())
+  name        String      @db.VarChar(255)
+  clients     Client[]    @relation("CompanyClients")
+  tasks       Task[]
+  credentials Credential[]
+}
+
+model Client {
+  id                 Int      @id @default(autoincrement())
+  name               String?  @db.VarChar(255)
+  messenger_name     String?  @db.VarChar(100)
+  intro_description  String?
+  note               String?
+  category           String?  @db.VarChar(100)
+  source             String?  @db.VarChar(100)
+  full_name          String?  @db.VarChar(255)
+  phone              String?  @db.VarChar(50)
+  email              String?  @db.VarChar(100)
+  country            String?  @db.VarChar(100)
+  city               String?  @db.VarChar(100)
+  currency           String?  @db.VarChar(10)
+
+  payment_details    String?
+  hourly_rate        Float?
+  percent            Float?
+  share_info         String?
+
+  referrer           String?
+  referrer_id        Int?
+  referrer_first     String?
+  referrer_first_id  Int?
+
+  manager_name       String?                        // Просто текстове ім’я
+  manager_id         Int?                          
+  manager            Employee? @relation("ManagerClients", fields: [manager_id], references: [id])
+
+  company_name       String?                        // Просто назва компанії
+  company_id         Int?
+  company            Company?  @relation("CompanyClients", fields: [company_id], references: [id])
+
+  chat_link          String?
+  photo_link         String?
+  folder_link        String?
+
+  tasks              Task[]
+  credentials        Credential[]
+}
+
+model Credential {
+  id          Int      @id @default(autoincrement())
+  login       String
+  password    String
+  description String?
+
+  clientId    Int?
+  client      Client?  @relation(fields: [clientId], references: [id])
+
+  companyId   Int?
+  company     Company? @relation(fields: [companyId], references: [id])
+}
+
+model Task {
+  id                 Int      @id @default(autoincrement())
+  title              String
+  description        String
+  status             String   @default("pending")
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  employeeId         Int
+  employee           Employee @relation(fields: [employeeId], references: [id])
+
+  clientId           Int?
+  client             Client?  @relation(fields: [clientId], references: [id])
+
+  companyId          Int?
+  company            Company? @relation(fields: [companyId], references: [id])
+
+  country            String?  @db.VarChar(100)
+  category           String?  @db.VarChar(100)
+  source             String?  @db.VarChar(100)
+  referer            String?  @db.VarChar(255)
+  refererFirst       String?  @db.VarChar(255)
+  managerName        String?  @db.VarChar(255)
+  firstOrder         Boolean? @default(false)
+
+  partnerName        String?  @db.VarChar(255)
+  partnerDisabled    Boolean? @default(false)
+  partnerPayment     Decimal? @db.Decimal(10,2)
+  partnerPlan        Int?
+  partnerPlanPercent Int?
+  partnerPlanSum     Int?
+  partnerDebt        Decimal? @db.Decimal(10,2)
+}
