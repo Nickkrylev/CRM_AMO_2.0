@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import '../styles/LoginPage.css';
 
 function LoginPage() {
@@ -9,24 +8,14 @@ function LoginPage() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    try {
-      const response = await axios.post("http://localhost:3000/api/auth/login", {
-        login,
-        password
-      });
-
-      const token = response.data.token;
-
-      // Сохраняем токен в localStorage
-      localStorage.setItem("token", token);
-      localStorage.setItem("isAuthenticated", "true");
-
+    
+    if (login === "a" && password === "a") {
+      localStorage.setItem("isAuthenticated", "true"); 
       navigate("/home");
-    } catch (err) {
-      console.error(err);
+    } else {
       setError("Неверный логин или пароль");
     }
   };
