@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import '../../styles/ClientModal.css';
+import './AddCompanyForm.css';
 
 export default function AddCompanyModal({ onCreate, onCancel }) {
   const { register, handleSubmit, reset } = useForm();

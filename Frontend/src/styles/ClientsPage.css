@@ -1,83 +1,110 @@
-/* Обёртка, чтобы Sidebar и контент шли рядом */
-.clients-layout {
-  display: flex;
-  height: 100%;
+/* ------------------------------------------------------------------
+   ClientsPage.css — обновлённая версия
+   • .clients-table теперь имеет min-width: max-content  ➜ весь столбец фиксируется,
+     при расширении появляется горизонтальный скролл, другие колонки не сжимаются.
+   • «Реферер» / «Реферер перв.» оформлены ярче: иконка-стрелка, лёгкий подсвет
+     + micro-анимация (scale) при ховере. 
+------------------------------------------------------------------*/
+
+/* ====== Общий лэйаут ====== */
+.clients-layout { display:flex; height:100vh; background:var(--bg-color); color:var(--container-text-color); overflow:hidden; }
+.clients-page   { flex:1; display:flex; flex-direction:column; padding:0 16px; overflow:hidden; }
+
+/* ====== Toolbar ====== */
+.list-toolbar   { display:grid; grid-template-columns:1fr auto; gap:24px; align-items:center; padding:12px 0; }
+.toolbar-search { background:var(--input-bg); border:1px solid rgba(128,128,128,.3); border-radius:4px; padding:8px 12px; font-size:.9rem; width:100%; color:var(--container-text-color); }
+.toolbar-search::placeholder { color:#7a8b9b; }
+.toolbar-stats  { display:flex; align-items:center; gap:12px; font-size:.9rem; }
+.toolbar-stats b{ font-size:1rem; }
+.toolbar-stats button{ all:unset; padding:6px 14px; border-radius:4px; background:var(--button-bg); font-weight:600; cursor:pointer; transition:background .2s; }
+.toolbar-stats button:hover{ background:var(--container-text-color); color:var(--bg-color); }
+
+/* ====== Таблица ====== */
+.clients-table-wrapper{ flex:1; overflow:auto; }
+
+/*  ▸ min-width:max-content фиксирует заданные пиксельные ширины,
+    ▸ table-layout:fixed — поддержка ellipsis. */
+.clients-table  { width:100%; min-width:max-content; border-collapse:collapse; font-size:.85rem; table-layout:fixed; }
+
+.clients-table thead th{
+  position:sticky; top:0; z-index:2;
+  background:var(--input-bg);
+  font-weight:600;
+  border:1px solid #0f415e;
+  padding:6px 8px;
+  white-space:normal; word-break:break-word; line-height:1.2;
 }
 
-/* Основная область — отступ слева под сайдбар */
-.clients-page {
-  flex: 1;
-  padding: 20px;
-  background: var(--bg-color);
-  overflow-y: auto;
-  /* Если Sidebar фиксированный, можно задать margin-left вместо flex:
-     margin-left: 80px;  */
+/* ─── Ручка-резайзер ─────────────────────────── */
+.resizer{
+  position:absolute; top:0; right:-4px;
+  width:8px; height:100%;
+  cursor:col-resize; z-index:3;
+}
+.resizer:hover{ background:rgba(255,255,255,.1); }
+
+.clients-table td{
+  border:1px solid #0f415e;
+  padding:6px 8px;
+  white-space:nowrap;
+  overflow:hidden; text-overflow:ellipsis;
+}
+.clients-table tbody tr:hover{
+  background:rgba(255,255,255,.05);
+  cursor:pointer;
 }
 
-.clients-header {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 20px;
-}
-
-.clients-search {
-  flex: 1;
-  padding: 8px 12px;
-  border: 1px solid var(--input-bg);
-  border-radius: 4px;
-  background: none;
-  color: var(--container-text-color);
-}
-
-.create-client-btn {
-  padding: 8px 16px;
+/* ====== Group row ====== */
+.group-row td {
+  position: sticky;
+  top: 32px; /* або 40px — в залежності від висоти твоїх <th> */
+  z-index: 1;
   background: var(--button-bg);
-  color: var(--bg-color);
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.create-client-btn:hover {
-  background: var(--container-text-color);
-  color: var(--bg-color);
-}
-
-.clients-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 16px;
-}
-
-.client-card {
-  padding: 16px;
-  border: 1px solid rgba(128,128,128,0.3);
-  border-radius: 8px;
-  background: var(--bg-color);
-  cursor: pointer;
-  transition: background-color 0.2s, transform 0.2s;
-}
-
-.client-card:hover {
-  background: rgba(255,255,255,0.05);
-  transform: translateY(-2px);
-}
-
-.client-card h3 {
-  margin: 0 0 8px;
+  font-weight: 600;
   color: var(--container-text-color);
+  user-select: none;
 }
 
-.client-card p {
-  margin: 4px 0;
-  color: var(--chips-color);
+.group-row:hover td{ background:#13628d; }
+
+/* ====== Ellipsis helper ====== */
+.ellipsis{
+  display:inline-block; width:100%;
+  vertical-align:top; white-space:nowrap;
+  overflow:hidden; text-overflow:ellipsis;
 }
 
-.empty-state {
-  text-align: center;
-  color: var(--container-text-color);
-  opacity: 0.7;
-  margin-top: 40px;
+/* ====== Empty state ====== */
+.empty-state{ margin-top:40px; text-align:center; color:var(--chips-color); }
+
+/* ====== Реферер-ссылки (улучшенный стиль) ====== */
+.ref-cell{
+  position:relative;
+  color:var(--link-color);
+  font-weight:600;
+  cursor:pointer;
+  text-decoration:none;
+  transition:color .2s, transform .2s;
+  white-space:nowrap;
+}
+.ref-cell::after{
+  content:'↗';                   /* стрелка-подсказка */
+  margin-left:6px;
+  font-size:.8em;
+  opacity:.7;
+  transition:opacity .2s, transform .2s;
+  display:inline-block;
+}
+.ref-cell:hover{
+  color:var(--link-hover);
+  transform:translateY(-1px);    /* лёгкий подъём при наведении */
+}
+.ref-cell:hover::after{
+  opacity:1;
+  transform:translateY(-1px) scale(1.1);  /* стрелка чуть увеличивается */
+}  
+.group-count {
+  color: #888;
+  font-size: 0.9em;
 }
 

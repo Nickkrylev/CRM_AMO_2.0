@@ -33,8 +33,31 @@ export default function App() {
     { id: 1, name: 'Яндекс.Директ' },
     { id: 2, name: 'Google Ads' },
   ]);
-  const [countries] = useState(['Россия', 'Украина', 'США', 'Канада']);
-  const [currencies] = useState(['RUB', 'UAH', 'USD', 'EUR']);
+  const [countries] = useState([
+    'Украина',
+    'Россия',
+    'Белоруссия',
+    'Бразилия',
+    'Германия',
+    'Израиль',
+    'Индонезия',
+    'Испания',
+    'Казахстан',
+    'Канада',
+    'Кыргызстан',
+    'Латвия',
+    'Мексика',
+    'ОАЭ',
+    'Польша',
+    'США',
+    'Таджикистан',
+    'Узбекистан',
+    'Чехия',
+    'Япония',
+    'Неизвестно'
+]
+);
+  const [currencies] = useState(['RUB', 'UAH', 'USD', 'EUR','USDT']);
 
   // Создать или обновить клиента
   const handleSaveClient = data => {
